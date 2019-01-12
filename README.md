@@ -26,6 +26,10 @@ Since it is a command line app, bamazon can't be deployed but you can still use 
          - list of the items available for sale with their unique id number, their name, their department and their price
          - then, you will be asked to enter the ID of the product you would like to buy and the number of items wanted
          - if there is not enough stock for this product, a message is displayed
+
+        ![](insufficentQty.gif)
+
+
          - if ther is enough stock, the purchase is made and a message with the total amount of the order is displayed
 
     *  __To use it as a manager__ 
@@ -35,9 +39,13 @@ Since it is a command line app, bamazon can't be deployed but you can still use 
         - Add to inventory: will allow the manager to add more of any item currently in stock
         - Add new product: will allow the manager to add a new product
 
-    ![](concert-this.gif)
-    ![](concert-this2.gif)
+    ![](manager1.gif)
+    ![](manager2.gif)
+    
 
+## Future developments
+For the future, it would be great if an "exit" option is available for the customer at any point.
+The customer or manager should be able to type "exit" or "quit" to exit the app at any point.
     
 
 
