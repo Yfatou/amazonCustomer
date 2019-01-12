@@ -35,13 +35,15 @@ Since it is a command line app, bamazon can't be deployed but you can still use 
         ![](purchase.gif)
 
     *  __To use it as a manager__ 
-        type : **"node bamazonManager.js"** in your command line and a menu with alist of actions will be displayed. You can choose to:  
+        type : **"node bamazonManager.js"** in your command line and a menu with a list of actions will be displayed. You can choose to:  
         - View the products for Sale : all the products currently available will be displayed with their unique id, their name, their price and their quantity
         - View low inventory: all the products with a stock lower than 5 will be displayed
         - Add to inventory: will allow the manager to add more of any item currently in stock
         - Add new product: will allow the manager to add a new product
 
     ![](manager1.gif)
+
+
     ![](manager2.gif)
     
 
