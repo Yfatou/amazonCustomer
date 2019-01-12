@@ -88,7 +88,7 @@ function lowInventory() {
 //Function to allow the manager to add inventory for a choosen product
 function addToInventory() {
     inquirer
-        .prompt([
+        .prompt ([
             {
                 name: "itemToAdd",
                 type: "input",

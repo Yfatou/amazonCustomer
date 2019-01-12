@@ -28,16 +28,22 @@ connection.connect(function(err) {
 // Function that start the program
 // It displays all the available items to the customer
 function start() {
-    connection.query("SELECT item_id ID, product_name PRODUCT, department_name DEPARTMENT, price PRICE FROM products", function(err, res){
+    connection.query("SELECT item_id ID, product_name PRODUCT, department_name DEPARTMENT, price PRICE FROM products", 
+    function(err, res){
         if (err) throw err;
 
         console.log("---------WELCOME TO OUR WEB STORE-------------");
         console.log("----------------------------------------------");
         console.log("----------------------------------------------");
         console.table(res);
+        purchase();
+    });
+}
 
-        inquirer
-            .prompt ([
+
+function purchase() {
+    inquirer
+        .prompt ([
             {
                 name: "productId",
                 type: "input",
@@ -48,49 +54,45 @@ function start() {
                 type: "input",
                 message: "How many units would you like to buy?"
             }
-            ])
-            .then(function(answer){
-                connection.query("SELECT stock_quantity FROM products WHERE ?", 
-                    { 
-                        item_id: answer.productId 
-                    },function(err, results){
-                            console.log(results);
-                        
-                //         var actualStock = results;
+        ]).then(function(answer) {
+            connection.query("SELECT stock_quantity, price FROM products WHERE ?", 
+            { 
+                item_id: answer.productId 
+            },
+            function(err, res) {
+                var currentStock = res[0].stock_quantity;
+                console.log("CurrentS: " + currentStock);
+                var price = res[0].price;
+                console.log("Price: " + price);
 
-                // if (actualStock < answer.numberOfItems) {
-                //     console.log("Insufficient quantity!");
-                // }
-                // else {
-                //     var newStock = actualStock - answer.numberOfItems;
-                //     connection.query("UPDATE products SET ? WHERE ?",[
-                //     {
-                //         stock_quantity: newStock
-                //     },
-                //     {
-                //         item_id: answer.productId
-                //     }
-                //     ], function(error) {
-                //         if (error) throw err;
-                            // connection.query("SELECT price FROM products WHERE ?",
-                            // {
-                            //     item_id: answer.productId
-                            // },function(err, res){
-                            //     console.log(res);
-                            //     var orderCost = res * answer.numberOfItems;
-                            //     console.log("Tank you! The total cost of your purchase is" + orderCost);
-                            // }
-                            // );
-                //         start();
-                //         }
-                //     )
-                // }
-            });
-            
-                
-            })
-
-
-        connection.end();
-    });
+                if ((parseInt(currentStock)) < (parseInt(answer.numberOfItems))){
+                    console.log("Insufficient quantity!!");
+                }
+                else {
+                    var newStock = parseInt(currentStock) - parseInt(answer.numberOfItems);
+                    console.log("NewS: " + newStock);
+                    connection.query("UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                stock_quantity: newStock
+                            },
+                            {
+                                item_id: answer.productId            
+                            }
+                        ],
+                        function(error) {
+                            if (error) throw err;
+                                console.log("Price: " + price);
+                                var order = parseInt(price) * parseInt(answer.numberOfItems);
+                                console.log("The cost of your purchase is: " + order + ". Thank you!!");
+                                start();
+                        }
+                    )      
+                            
+                }
+            }
+            );
+        });
+    //connection.end();
 }
+        
