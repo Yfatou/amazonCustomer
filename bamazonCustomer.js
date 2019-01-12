@@ -40,7 +40,8 @@ function start() {
     });
 }
 
-
+//Function for the customer purchase action
+//It updates the table products and calculate the price of the purchase
 function purchase() {
     inquirer
         .prompt ([
@@ -60,17 +61,23 @@ function purchase() {
                 item_id: answer.productId 
             },
             function(err, res) {
+                //the current stock of the choosen product is stocked in a variable
                 var currentStock = res[0].stock_quantity;
                 console.log("CurrentS: " + currentStock);
+                //the prise of the choosen product is stocked in a variable
                 var price = res[0].price;
                 console.log("Price: " + price);
 
+                //Test if there is enough stock
+                //If the stock is insufficient
                 if ((parseInt(currentStock)) < (parseInt(answer.numberOfItems))){
                     console.log("Insufficient quantity!!");
                 }
-                else {
+                else {//there is enough stock
+                    //calculate the new stock
                     var newStock = parseInt(currentStock) - parseInt(answer.numberOfItems);
                     console.log("NewS: " + newStock);
+                    //Update the table products with the new stock
                     connection.query("UPDATE products SET ? WHERE ?",
                         [
                             {
@@ -82,13 +89,15 @@ function purchase() {
                         ],
                         function(error) {
                             if (error) throw err;
-                                console.log("Price: " + price);
-                                var order = parseInt(price) * parseInt(answer.numberOfItems);
-                                console.log("The cost of your purchase is: " + order + ". Thank you!!");
-                                start();
+                            console.log("Price: " + price);
+                            //calcuate the order total
+                            var order = parseInt(price) * parseInt(answer.numberOfItems);
+                            //and display it to the customer
+                            console.log("The cost of your purchase is: " + order + ". Thank you!!");
+                            //start again
+                            start();
                         }
-                    )      
-                            
+                    );              
                 }
             }
             );
