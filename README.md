@@ -30,7 +30,9 @@ Since it is a command line app, bamazon can't be deployed but you can still use 
         ![](insufficentQty.gif)
 
 
-         - if ther is enough stock, the purchase is made and a message with the total amount of the order is displayed
+         - if there is enough stock, the purchase is made and a message with the total amount of the order is displayed
+
+        ![](purchase.gif)
 
     *  __To use it as a manager__ 
         type : **"node bamazonManager.js"** in your command line and a menu with alist of actions will be displayed. You can choose to:  
